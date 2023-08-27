@@ -1,7 +1,8 @@
 const Pool=require('pg').Pool;
+const dotenv=require('dotenv').config();
 
 const pool=new Pool({
-    connectionString:"postgres://postgres:123456@localhost:5432/HealthAppDB"
+    connectionString:process.env.connectionString
     }
 )
 

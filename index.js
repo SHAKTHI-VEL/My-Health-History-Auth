@@ -8,6 +8,7 @@ const labApi=require('./routes/labApi')
 
 app.use(express.json())
 
+// Routes
 app.use('/patient',patientApi);
 app.use('/doctor',doctorApi);
 app.use('/lab',labApi);
