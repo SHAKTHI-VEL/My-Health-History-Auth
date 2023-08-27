@@ -9,15 +9,15 @@ const authPassword_LAB=(req,res)=>{
 
     pool.query('SELECT lab_password FROM public."HealthApp_lab" WHERE lab_id=$1',[lab_id],async(err,response)=>{
         if(err){
-            res.status(500).json({sucess:"false",message:"Internal Server Error"})
+           return res.status(500).json({sucess:"false",message:"Internal Server Error"})
         }
         else{
             
             if(response.rowCount==0){
-                res.status(401).json({sucess:false,message:`Lab with id:-${lab_id} doesn't exist`})
+                return res.status(401).json({sucess:false,message:`Lab with id:-${lab_id} doesn't exist`})
             }
-            if((response.rows[0].lab_password)===(null)){
-                res.status(404).json({sucess:false,message:"Not generated Password yet"})
+            else if((response.rows[0].lab_password)===(null)){
+                return res.status(404).json({sucess:false,message:"Not generated Password yet"})
             }
             else{
                 const secPass=response.rows[0].lab_password;
@@ -33,7 +33,7 @@ const authPassword_LAB=(req,res)=>{
         }
     })
     } catch (error) {
-        res.status(500).json({sucess:"false",message:"Internal Server Error"})
+       return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
 
 

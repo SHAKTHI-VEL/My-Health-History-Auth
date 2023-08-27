@@ -11,14 +11,14 @@ const generatePassword=async (req,res)=>{
 
         pool.query('UPDATE public."HealthApp_doctor" set doctor_password=$1 WHERE doctor_id=$2',[secPassword,doctor_id],(err,response)=>{
             if(err){
-                res.status(500).json({sucess:"false",message:"Internal Server Error"})
+                return res.status(500).json({sucess:"false",message:"Internal Server Error"})
             }
             else{
                 if(response.rowCount==0){
-                    res.status(401).json({sucess:false,message:`Doctor with id:-${doctor_id} doesn't exist`})
+                    return res.status(401).json({sucess:false,message:`Doctor with id:-${doctor_id} doesn't exist`})
                 }
                 else{
-                    res.status(201).json({sucesss:true,doctor_id:doctor_id,message:"Password updated sucessfully"})
+                    return res.status(201).json({sucesss:true,doctor_id:doctor_id,message:"Password updated sucessfully"})
                 }
                
             }
@@ -26,7 +26,7 @@ const generatePassword=async (req,res)=>{
         
 
     } catch (error) {
-        res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
 }
 

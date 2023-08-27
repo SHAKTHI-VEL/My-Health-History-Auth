@@ -9,15 +9,18 @@ const authPassword=(req,res)=>{
 
     pool.query('SELECT doctor_password FROM public."HealthApp_doctor" WHERE doctor_id=$1',[doctor_id],async(err,response)=>{
         if(err){
-            res.status(500).json({sucess:"false",message:"Internal Server Error"})
+            return res.status(500).json({sucess:"false",message:"Internal Server Error"})
         }
-        if((response.rows[0].lab_password)===(null)){
-            res.status(404).json({sucess:false,message:"Not generated Password yet"})
-        }
+        
         else{
             if(response.rowCount==0){
-                res.status(401).json({sucess:false,message:`Doctor with id:-${doctor_id} doesn't exist`})
-            }else{
+                return res.status(401).json({sucess:false,message:`Doctor with id:-${doctor_id} doesn't exist`})
+            }
+            else if((response.rows[0].doctor_password)===(null)){
+                return res.status(404).json({sucess:false,message:"Not generated Password yet"})
+            }
+            else{
+                
                 const secPass=response.rows[0].doctor_password;
                 const compare=await bcrypt.compare(password,secPass);
                 if(!compare){
@@ -31,7 +34,7 @@ const authPassword=(req,res)=>{
         }
     })
     } catch (error) {
-        res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
 
 

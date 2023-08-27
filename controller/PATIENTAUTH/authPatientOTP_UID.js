@@ -10,25 +10,29 @@ const authPatientOTP_UID=(req,res)=>{
         (err,response)=>{
 
             if(err){
-                res.status(500).json({sucess:"false",message:"Internal Server Error"})
+                return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+            }
+
+            if(response.rowCount==0){
+                return res.status(401).json({sucess:false,message:`Patient with uid:-${uid} doesn't exist`})
             }
 
             if((response.rows[0].otp)===(null)){
-                res.status(404).json({sucess:false,message:"Not generated OTP yet"})
+               return res.status(404).json({sucess:false,message:"Not generated OTP yet"})
             }
 
             const db_otp=response.rows[0].otp;
             const id=response.rows[0].uid;
             if(otp==db_otp){
-                res.status(200).json({sucess:"true",uid:id,message:"OTP verified sucessfully"})
+                return res.status(200).json({sucess:"true",uid:id,message:"OTP verified sucessfully"})
             }else{
-                res.status(500).json({sucess:"false",message:"Invalid OTP"})
+                return res.status(500).json({sucess:"false",message:"Invalid OTP"})
             }
         
         })
 
     } catch (error) {
-        res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
 
     

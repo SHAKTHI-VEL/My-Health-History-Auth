@@ -12,11 +12,11 @@ const generatePatientOTP_UID=(req,res)=>{
         (err,response)=>{
     
             if(err){
-                res.status(500).json({sucess:'false',message:"Internal server error"})
+               return res.status(500).json({sucess:'false',message:"Internal server error"})
                 }
     
                 if(response.rowCount===0){
-                    res.status(404).json({sucess:'false',"message":"user not found"})
+                   return res.status(404).json({sucess:'false',"message":"user not found"})
                 }
     
             else{
@@ -38,19 +38,18 @@ const generatePatientOTP_UID=(req,res)=>{
                 };
                 mailTransporter.sendMail(mailDetails, function(err, data) {
                     if(err) {
-                        res.status(501).json({sucess:'false'})
+                        return res.status(501).json({sucess:'false'})
                     } else {
             
-                        res.status(200).json({sucess:'true',message:'Email sent successfully'})
+                       return res.status(200).json({sucess:'true',message:'Email sent successfully'})
                         
                     }
                 });
-                res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
+                return res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
             }
         })
     }catch (error) {
-        console.log(error);
-        res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
 }
 
