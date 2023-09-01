@@ -2,10 +2,10 @@ const express=require('express');
 const router=express.Router();
 
 // Controllers
-const generateOTP_UID=require('../controller/PATIENTAUTH/generatePatientOTP_UID');
-const generateOTP_PHNO=require('../controller/PATIENTAUTH/generatePatientOTP_PHNO');
-const authOTP_UID=require('../controller/PATIENTAUTH/authPatientOTP_UID');
-const authPatientOTP_PHNO=require('../controller/PATIENTAUTH/authPatientOTP_PHNO');
+const generateOTP_UID=require('../controller/PATIENT/generatePatientOTP_UID');
+const generateOTP_PHNO=require('../controller/PATIENT/generatePatientOTP_PHNO');
+const authOTP_UID=require('../controller/PATIENT/authPatientOTP_UID');
+const authPatientOTP_PHNO=require('../controller/PATIENT/authPatientOTP_PHNO');
 
 
 // @Desc:-Generate OTP by using UID
