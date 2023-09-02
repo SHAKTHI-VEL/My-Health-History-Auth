@@ -6,6 +6,11 @@ const generatePassword=async (req,res)=>{
 
         const {doctor_id,password}=req.body;
 
+
+        if(!!(!password)){
+            return res.status(404).json({sucess:false,message:"Password field missing"})
+        }
+        else{
         const salt=await bcrypt.genSalt(10);
         const secPassword=await bcrypt.hash(password,salt);
 
@@ -23,6 +28,7 @@ const generatePassword=async (req,res)=>{
                
             }
         })
+    }
         
 
     } catch (error) {

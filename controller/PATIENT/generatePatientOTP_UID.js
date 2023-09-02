@@ -8,6 +8,10 @@ const generatePatientOTP_UID=(req,res)=>{
 
         const {uid}=req.body;
 
+        if(!!(!uid)){
+            return res.status(404).json({sucess:false,message:"UID field missing"})
+        }
+        else{
         pool.query('UPDATE public."HealthApp_patient" set otp=$1 WHERE uid=$2 RETURNING email',[otp,uid],
         (err,response)=>{
     
@@ -48,6 +52,7 @@ const generatePatientOTP_UID=(req,res)=>{
                 return res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
             }
         })
+    }
     }catch (error) {
         return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }

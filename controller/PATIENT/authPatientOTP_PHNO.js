@@ -5,6 +5,12 @@ const authPatientOTP_PHNO=(req,res)=>{
         
         const {phone_no,otp}=req.body;
 
+        if(!!(!otp)){
+            return res.status(404).json({sucess:false,message:"OTP field missing"})
+        }
+        else{
+    
+
         pool.query('SELECT otp,uid from public."HealthApp_patient" WHERE phone=$1',[phone_no],
         (err,response)=>{
 
@@ -28,7 +34,7 @@ const authPatientOTP_PHNO=(req,res)=>{
             }
         
         })
-
+    }
     } catch (error) {
         return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }

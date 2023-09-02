@@ -7,6 +7,10 @@ const authPassword=(req,res)=>{
         
     const {doctor_id,password}=req.body;
 
+    if(!!(!password)){
+        return res.status(404).json({sucess:false,message:"Password field missing"})
+    }
+    else{
     pool.query('SELECT doctor_password FROM public."HealthApp_doctor" WHERE doctor_id=$1',[doctor_id],async(err,response)=>{
         if(err){
             return res.status(500).json({sucess:"false",message:"Internal Server Error"})
@@ -32,7 +36,7 @@ const authPassword=(req,res)=>{
 
 
         }
-    })
+    })}
     } catch (error) {
         return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }

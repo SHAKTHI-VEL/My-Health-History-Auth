@@ -6,6 +6,12 @@ const generatePassword_LAB=async (req,res)=>{
 
         const {lab_id,password}=req.body;
 
+        if(!!(!password)){
+            return res.status(404).json({sucess:false,message:"Password field missing"})
+        }
+        
+        else{
+
         const salt=await bcrypt.genSalt(10);
         const secPassword=await bcrypt.hash(password,salt);
 
@@ -24,7 +30,7 @@ const generatePassword_LAB=async (req,res)=>{
             }
         })
         
-
+    }
     } catch (error) {
         return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }

@@ -8,6 +8,12 @@ const generatePatientOTP_PHNO=(req,res)=>{
 
         const {phone_no}=req.body;
 
+        if(!!(!phone_no)){
+            return res.status(404).json({sucess:false,message:"Phone_NO field missing"})
+        }
+
+        else{
+
         pool.query('UPDATE public."HealthApp_patient" set otp=$1 WHERE phone=$2 RETURNING email',[otp,phone_no],
         (err,response)=>{
     
@@ -47,6 +53,7 @@ const generatePatientOTP_PHNO=(req,res)=>{
                 return res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
             }
         })
+    }
     }catch (error) {
         return res.status(500).json({sucess:"false",message:"Internal Server Error"})
     }
