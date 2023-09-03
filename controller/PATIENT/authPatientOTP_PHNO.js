@@ -11,7 +11,7 @@ const authPatientOTP_PHNO=(req,res)=>{
         else{
     
 
-        pool.query('SELECT otp,uid from public."HealthApp_patient" WHERE phone=$1',[phone_no],
+        pool.query('SELECT otp,uid,name from public."HealthApp_patient" WHERE phone=$1',[phone_no],
         (err,response)=>{
 
             if(err){
@@ -27,8 +27,10 @@ const authPatientOTP_PHNO=(req,res)=>{
 
             const db_otp=response.rows[0].otp;
             const id=response.rows[0].uid;
+            const name=response.rows[0].name;
+
             if(otp==db_otp){
-                return res.status(200).json({sucess:"true",uid:id,message:"OTP verified sucessfully"})
+                return res.status(200).json({sucess:"true",uid:id,name:name,acesslevel:"patient",message:"OTP verified sucessfully"})
             }else{
                 return res.status(500).json({sucess:"false",message:"Invalid OTP"})
             }
