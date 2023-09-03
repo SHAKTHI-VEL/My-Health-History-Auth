@@ -30,7 +30,7 @@ const authPatientOTP_PHNO=(req,res)=>{
             const name=response.rows[0].name;
 
             if(otp==db_otp){
-                return res.status(200).json({success:"true",uid:id,name:name,acesslevel:"patient",message:"OTP verified successfully"})
+                return res.status(200).json({success:"true",uid:id,name:name,accesslevel:"patient",message:"OTP verified successfully"})
             }else{
                 return res.status(500).json({success:"false",message:"Invalid OTP"})
             }

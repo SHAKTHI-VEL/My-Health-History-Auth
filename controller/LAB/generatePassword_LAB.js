@@ -25,7 +25,7 @@ const generatePassword_LAB=async (req,res)=>{
                 }
                 else{
                     const name=response.rows[0].lab_name;
-                    return res.status(201).json({success:true,lab_id:lab_id,name:name,acesslevel:"lab",message:"Password updated successfully"})
+                    return res.status(201).json({success:true,lab_id:lab_id,name:name,accesslevel:"lab",message:"Password updated successfully"})
                 }
                
             }
