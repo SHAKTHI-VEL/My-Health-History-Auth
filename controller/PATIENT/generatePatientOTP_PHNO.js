@@ -9,7 +9,7 @@ const generatePatientOTP_PHNO=(req,res)=>{
         const {phone_no}=req.body;
 
         if(!!(!phone_no)){
-            return res.status(404).json({sucess:false,message:"Phone_NO field missing"})
+            return res.status(404).json({success:false,message:"Phone_NO field missing"})
         }
 
         else{
@@ -18,11 +18,11 @@ const generatePatientOTP_PHNO=(req,res)=>{
         (err,response)=>{
     
             if(err){
-                return res.status(500).json({sucess:'false',message:"Internal server error"})
+                return res.status(500).json({success:'false',message:"Internal server error"})
                 }
     
                 if(response.rowCount===0){
-                   return res.status(404).json({sucess:'false',"message":"user not found"})
+                   return res.status(404).json({success:'false',"message":"user not found"})
                 }
     
             else{
@@ -44,18 +44,18 @@ const generatePatientOTP_PHNO=(req,res)=>{
                 };
                 mailTransporter.sendMail(mailDetails, function(err, data) {
                     if(err) {
-                       return res.status(501).json({sucess:'false',message:'Some Error Occured'})
+                       return res.status(501).json({success:'false',message:'Some Error Occured'})
                     } else {
-                       return res.status(200).json({sucess:'true',message:'Email sent successfully'})
+                       return res.status(200).json({success:'true',message:'Email sent successfully'})
                         
                     }
                 });
-                return res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
+                return res.status(200).json({success:"true",message:"OTP sent successfully"})
             }
         })
     }
     }catch (error) {
-        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({success:"false",message:"Internal Server Error"})
     }
 }
 

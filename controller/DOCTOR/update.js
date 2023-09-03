@@ -10,7 +10,7 @@ const update=(req,res)=>{
                 console.log(err);
             }
             else if(response.rowCount==0){
-                return res.status(404).json({sucess:"false",message:`doctor with doctor_id ${doctor_id} does not exist`})
+                return res.status(404).json({success:"false",message:`doctor with doctor_id ${doctor_id} does not exist`})
             }
             else if(!!(!degree)){
                 pool.query('UPDATE public."HealthApp_doctor" SET doctor_number=$1 WHERE doctor_id=$2',[doctor_number,doctor_id],(err,response)=>{
@@ -18,7 +18,7 @@ const update=(req,res)=>{
                         console.log(err);
                     }
                     else{
-                        return res.status(200).json({sucess:true,message:"Updated Sucessfully"})
+                        return res.status(200).json({success:true,message:"Updated successfully"})
                     }
                 })
             }
@@ -29,7 +29,7 @@ const update=(req,res)=>{
                         console.log(err);
                     }
                     else{
-                        return res.status(200).json({sucess:true,message:"Updated Sucessfully"})
+                        return res.status(200).json({success:true,message:"Updated successfully"})
                     }
                 })
             }
@@ -40,7 +40,7 @@ const update=(req,res)=>{
                         console.log(err);
                     }
                     else{
-                        return res.status(200).json({sucess:true,message:"Updated Sucessfully"});
+                        return res.status(200).json({success:true,message:"Updated successfully"});
                     }
                 })
             }
@@ -54,7 +54,7 @@ const update=(req,res)=>{
        
 
     } catch (error) {
-        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({success:"false",message:"Internal Server Error"})
     }
 }
 

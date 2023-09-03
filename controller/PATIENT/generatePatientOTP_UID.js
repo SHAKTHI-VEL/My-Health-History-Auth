@@ -9,18 +9,18 @@ const generatePatientOTP_UID=(req,res)=>{
         const {uid}=req.body;
 
         if(!!(!uid)){
-            return res.status(404).json({sucess:false,message:"UID field missing"})
+            return res.status(404).json({success:false,message:"UID field missing"})
         }
         else{
         pool.query('UPDATE public."HealthApp_patient" set otp=$1 WHERE uid=$2 RETURNING email',[otp,uid],
         (err,response)=>{
     
             if(err){
-               return res.status(500).json({sucess:'false',message:"Internal server error"})
+               return res.status(500).json({success:'false',message:"Internal server error"})
                 }
     
                 if(response.rowCount===0){
-                   return res.status(404).json({sucess:'false',"message":"user not found"})
+                   return res.status(404).json({success:'false',"message":"user not found"})
                 }
     
             else{
@@ -42,19 +42,19 @@ const generatePatientOTP_UID=(req,res)=>{
                 };
                 mailTransporter.sendMail(mailDetails, function(err, data) {
                     if(err) {
-                        return res.status(501).json({sucess:'false'})
+                        return res.status(501).json({success:'false'})
                     } else {
             
-                       return res.status(200).json({sucess:'true',message:'Email sent successfully'})
+                       return res.status(200).json({success:'true',message:'Email sent successfully'})
                         
                     }
                 });
-                return res.status(200).json({sucess:"true",message:"OTP sent sucessfully"})
+                return res.status(200).json({success:"true",message:"OTP sent successfully"})
             }
         })
     }
     }catch (error) {
-        return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+        return res.status(500).json({success:"false",message:"Internal Server Error"})
     }
 }
 

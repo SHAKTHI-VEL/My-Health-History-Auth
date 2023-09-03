@@ -8,30 +8,31 @@ const authPassword_LAB=(req,res)=>{
     const {lab_id,password}=req.body;
 
     if(!!(!password)){
-        return res.status(404).json({sucess:false,message:"Password field missing"})
+        return res.status(404).json({success:false,message:"Password field missing"})
     }
 
     else{
 
-    pool.query('SELECT lab_password FROM public."HealthApp_lab" WHERE lab_id=$1',[lab_id],async(err,response)=>{
+    pool.query('SELECT lab_password,lab_name FROM public."HealthApp_lab" WHERE lab_id=$1',[lab_id],async(err,response)=>{
         if(err){
-           return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+           return res.status(500).json({success:"false",message:"Internal Server Error"})
         }
         else{
             
             if(response.rowCount==0){
-                return res.status(401).json({sucess:false,message:`Lab with id:-${lab_id} doesn't exist`})
+                return res.status(401).json({success:false,message:`Lab with id:-${lab_id} doesn't exist`})
             }
             else if((response.rows[0].lab_password)===(null)){
-                return res.status(404).json({sucess:false,message:"Not generated Password yet"})
+                return res.status(404).json({success:false,message:"Not generated Password yet"})
             }
             else{
                 const secPass=response.rows[0].lab_password;
+                const name=response.rows[0].lab_name;
                 const compare=await bcrypt.compare(password,secPass);
                 if(!compare){
-                    return res.status(400).json({sucess:false,message:"Please try to login with correct credentials"});
+                    return res.status(400).json({success:false,message:"Please try to login with correct credentials"});
                 }else{
-                    return res.status(200).json({sucess:true,lab_id:lab_id,message:"Credentials verified"})
+                    return res.status(200).json({success:true,lab_id:lab_id,name:name,accesslevel:"lab",message:"Credentials verified"})
                 }
             }
 
@@ -40,7 +41,7 @@ const authPassword_LAB=(req,res)=>{
     })
 }
     } catch (error) {
-       return res.status(500).json({sucess:"false",message:"Internal Server Error"})
+       return res.status(500).json({success:"false",message:"Internal Server Error"})
     }
 
 
